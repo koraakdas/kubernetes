@@ -8,12 +8,13 @@ metadata:
 spec:
   containers:
     - name: apache-webserver
-      image: httpd    
+      image: httpd
       ports:
         - containerPort: 80
+          protocol: TCP
       livenessProbe:
         httpGet:
-          path: /
           port: 80
-        initialDelaySeconds: 30
-        periodSeconds: 12
+          path: /index.html
+        initialDelaySeconds: 3
+        periodSeconds: 4
