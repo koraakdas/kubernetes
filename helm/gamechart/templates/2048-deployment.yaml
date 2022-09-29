@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+ name: {{ .Release.Namespace }}-game
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: game-deployment
+  namespace: {{ .Release.Namespace }}-game
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}-app
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Release.Name }}-app
+  replicas: 4
+  template:
+    metadata:
+      name: puzzle-game-pod
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}-app
+      namespace: game-application
+    spec:
+      containers:
+        - name: 2048-game
+          image: alexwhen/docker-2048
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: game-service
+  namespace: {{ .Release.Namespace }}-game
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-security-groups: {{.Values.securityGroup | quote}}
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: {{ .Release.Name }}-app
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+
