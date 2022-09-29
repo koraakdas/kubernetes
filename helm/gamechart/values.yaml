@@ -1,5 +1,1 @@
-imageRegistry: "alexwhen/docker-2048"
-pullPolicy: "Always"
-nameSpace: "game-application"
-label: "game-2048"
-securityGroup: "sg-0f0b39e9b8eaa5ba4"
+securityGroup: "sg-0b81b83f2f9e2184c"
