@@ -1,7 +1,7 @@
 # Default values for webserver-chart.
 
 # Web server external acess rules in EKS
-securityGroup: "sg-0296e08447fd827dd"
+securityGroup: "sg-0a8fae6e9ef0a426a"
 
 # Webserver details
 server:
