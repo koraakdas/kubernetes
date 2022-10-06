@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-deployment
+  name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ .Release.Name }}-app
@@ -12,13 +12,13 @@ spec:
   replicas: 4
   template:
     metadata:
-      name: {{ .Release.Name }}-pod
+      name: {{ .Release.Name }}
       labels:
         app.kubernetes.io/name: {{ .Release.Name }}-app
       namespace: game-application
     spec:
       containers:
-        - name: {{ .Release.Name }}-container
+        - name: {{ .Release.Name }}
           image: {{ .Values.server.image}}
           imagePullPolicy: Always
           ports:
@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-service
+  name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-security-groups: {{.Values.securityGroup | quote}}
