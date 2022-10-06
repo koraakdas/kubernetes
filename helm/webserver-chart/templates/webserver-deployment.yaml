@@ -4,17 +4,17 @@ metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/name: {{ .Release.Name }}-app
+    app.kubernetes.io/name: {{ .Release.Name }}
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ .Release.Name }}-app
+      app.kubernetes.io/name: {{ .Release.Name }}
   replicas: 4
   template:
     metadata:
       name: {{ .Release.Name }}
       labels:
-        app.kubernetes.io/name: {{ .Release.Name }}-app
+        app.kubernetes.io/name: {{ .Release.Name }}
       namespace: game-application
     spec:
       containers:
@@ -34,7 +34,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app.kubernetes.io/name: {{ .Release.Name }}-app
+    app.kubernetes.io/name: {{ .Release.Name }}
   ports:
     - port: {{ .Values.server.port}}
       targetPort: {{ .Values.server.port}}
