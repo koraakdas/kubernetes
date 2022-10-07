@@ -1,0 +1,9 @@
+# Default values for webserver-chart.
+
+# Web server external acess rules in EKS
+securityGroup: "sg-0a8fae6e9ef0a426a"
+
+# Webserver details
+server:
+  image: alexwhen/docker-2048
+  port: 80

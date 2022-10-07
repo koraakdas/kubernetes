@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Release.Name }}
+  replicas: 4
+  template:
+    metadata:
+      name: {{ .Release.Name }}
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}
+      namespace: game-application
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: {{ .Values.server.image}}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{ .Values.server.port}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-security-groups: {{.Values.securityGroup | quote}}
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: {{ .Release.Name }}
+  ports:
+    - port: {{ .Values.server.port}}
+      targetPort: {{ .Values.server.port}}
+      protocol: TCP
